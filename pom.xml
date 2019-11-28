@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.single</groupId>
-    <artifactId>YourMe</artifactId>
+    <artifactId>yourme</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-    <name>YourMe</name>
+    <name>yourme_backend</name>
     <description>a software bases on love</description>
 
     <properties>
@@ -99,6 +99,7 @@
     </dependencies>
 
     <build>
+        <finalName>yourme_backend</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
