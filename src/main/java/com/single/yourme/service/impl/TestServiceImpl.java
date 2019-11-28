@@ -1,7 +1,7 @@
 package com.single.yourme.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.single.yourme.repository.TestMapper;
+import com.single.yourme.mapper.TestMapper;
 import com.single.yourme.model.Test;
 import com.single.yourme.service.ITestService;
 import org.springframework.stereotype.Service;

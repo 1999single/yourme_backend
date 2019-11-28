@@ -1,4 +1,4 @@
-package com.single.yourme.repository;
+package com.single.yourme.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.single.yourme.model.Test;

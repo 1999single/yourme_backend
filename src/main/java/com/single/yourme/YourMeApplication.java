@@ -19,7 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @EnableSwagger2
 @SpringBootApplication
-@MapperScan("com.single.yourme.repository")
+@MapperScan("com.single.yourme.mapper")
 public class YourMeApplication {
 
     public static void main(String[] args) {
