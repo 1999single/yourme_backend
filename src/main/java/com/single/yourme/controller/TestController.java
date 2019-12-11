@@ -1,8 +1,7 @@
 package com.single.yourme.controller;
 
-import com.single.yourme.model.Test;
+import com.single.yourme.entity.Test;
 import com.single.yourme.service.ITestService;
-import com.single.yourme.utils.JwtUtil.CustomClaim;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

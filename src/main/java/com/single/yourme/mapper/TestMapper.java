@@ -1,9 +1,8 @@
 package com.single.yourme.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.single.yourme.model.Test;
+import com.single.yourme.entity.Test;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 @Mapper
 public interface TestMapper extends BaseMapper<Test> {

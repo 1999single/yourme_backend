@@ -3,7 +3,7 @@
 <mapper namespace="com.single.yourme.mapper.TestMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.single.yourme.model.Test">
+    <resultMap id="BaseResultMap" type="com.single.yourme.entity.Test">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
     </resultMap>

@@ -1,8 +1,7 @@
 package com.single.yourme.utils;
 
+import com.single.yourme.core.jwt.JwtUtil;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 
 public class JwtUtilTest {

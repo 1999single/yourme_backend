@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.single.yourme.mapper.BankMapper">
+
+    <cache-ref namespace="com.single.yourme.mapper.BankMapper"></cache-ref>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.single.yourme.entity.Bank">
+        <id column="id" property="id"/>
+        <result column="Bank_Name" property="bankName"/>
+        <result column="UnionPay_Number" property="unionpayNumber"/>
+        <result column="Bank_Category_Number" property="bankCategoryNumber"/>
+        <result column="City" property="city"/>
+        <result column="Province" property="province"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, Bank_Name, UnionPay_Number, Bank_Category_Number, City, Province
+    </sql>
+
+    <select id="getFuJian" resultType="com.single.yourme.entity.Bank">
+
+        SELECT  ID,Bank_Category_Number,UnionPay_Number,Province,City,Bank_Name  FROM bank     WHERE (City = '福州市')
+    </select>
+    <select id="getBeiJin" resultType="com.single.yourme.entity.Bank">
+                SELECT  ID,Bank_Category_Number,UnionPay_Number,Province,City,Bank_Name  FROM bank     WHERE (City = '北京市')
+    </select>
+</mapper>

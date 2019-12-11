@@ -1,5 +1,6 @@
 package com.single.yourme;
 
+import com.single.yourme.core.listener.MainBusiListeners;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -9,7 +10,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
@@ -17,13 +20,17 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author 1999single
  * @date 2016/10/31
  */
-@EnableSwagger2
 @SpringBootApplication
+@EnableWebSocket
+@EnableCaching
+@EnableSwagger2
 @MapperScan("com.single.yourme.mapper")
 public class YourMeApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(YourMeApplication.class, args);
+        SpringApplication application = new SpringApplication(YourMeApplication.class);
+        application.addListeners(new MainBusiListeners());
+        application.run(args);
     }
 
     @Bean
