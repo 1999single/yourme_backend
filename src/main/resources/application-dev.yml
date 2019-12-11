@@ -1,5 +1,5 @@
 server:
-  port: 433
+  port: 443
   ssl:
     key-store: classpath:cert.pfx
     key-store-password: n9chHP02
