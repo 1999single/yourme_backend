@@ -24,8 +24,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 2019-12-08
  */
 @Slf4j
-@ServerEndpoint("/im/{userId}")
-@Component
+//@ServerEndpoint("/im/{userId}")
+//@Component
 public class WebSocketServer {
 
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。

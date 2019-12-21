@@ -1,8 +1,0 @@
-2019-12-07 23:21:53.049 [http-nio-443-exec-1] ERROR com.single.yourme.core.jwt.JwtFilter - Validate token fail, token:JwtToken(token=null), error:对不起，你真的没有我帅。
-2019-12-07 23:29:46.149 [http-nio-443-exec-3] ERROR com.single.yourme.core.jwt.JwtFilter - Validate token fail, token:JwtToken(token=null), error:对不起，你真的没有我帅。
-2019-12-07 23:48:13.003 [http-nio-443-exec-6] ERROR com.single.yourme.core.jwt.JwtFilter - Validate token fail, token:JwtToken(token=null), error:对不起，你真的没有我帅。
-2019-12-07 23:50:54.308 [http-nio-443-exec-8] ERROR com.single.yourme.core.jwt.JwtFilter - Validate token fail, token:JwtToken(token=null), error:对不起，你真的没有我帅。
-2019-12-07 23:54:24.019 [http-nio-443-exec-1] ERROR com.single.yourme.core.jwt.JwtFilter - Validate token fail, token:JwtToken(token=null), error:对不起，你真的没有我帅。
-2019-12-07 23:54:31.168 [http-nio-443-exec-8] ERROR com.single.yourme.core.jwt.JwtFilter - Validate token fail, token:JwtToken(token=null), error:对不起，你真的没有我帅。
-2019-12-07 23:54:49.087 [http-nio-443-exec-9] ERROR com.single.yourme.core.jwt.JwtFilter - Validate token fail, token:JwtToken(token=null), error:对不起，你真的没有我帅。
-2019-12-07 23:55:43.882 [http-nio-443-exec-3] ERROR com.single.yourme.core.jwt.JwtFilter - Validate token fail, token:JwtToken(token=null), error:对不起，你真的没有我帅。
