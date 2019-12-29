@@ -25,10 +25,8 @@ public class SmsServiceImpl extends ServiceImpl<SmsMapper, Sms> implements ISmsS
     private SmsMapper smsMapper;
 
     @Override
-    @Cacheable(cacheNames = LettuceRedisConfig.CacheName.REGISTER_CODE_10MIN, key = "'register_code'+'['+#phoneNum+']'")
     public String sendRegisterSms(String phoneNum, String uuid) {
-        String str = String.valueOf(System.currentTimeMillis());
-        String code = str.substring(str.length() - 6);
+        String code = getRegisterCode(phoneNum);
         SmsUtils.sendSms(phoneNum, uuid, code);
         Sms sms = new Sms(uuid, phoneNum, code);
         smsMapper.insert(sms);
@@ -38,6 +36,7 @@ public class SmsServiceImpl extends ServiceImpl<SmsMapper, Sms> implements ISmsS
     @Override
     @Cacheable(cacheNames = LettuceRedisConfig.CacheName.REGISTER_CODE_10MIN, key = "'register_code'+'['+#phoneNum+']'")
     public String getRegisterCode(String phoneNum) {
-        return null;
+        String str = String.valueOf(System.currentTimeMillis());
+        return str.substring(str.length() - 6);
     }
 }
