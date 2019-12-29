@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContext;
  * @author 1999single
  * @since 2019-12-04
  */
-public class ApplicationContextUtil {
+public class ApplicationContextUtils {
 
     private static ApplicationContext context;
 

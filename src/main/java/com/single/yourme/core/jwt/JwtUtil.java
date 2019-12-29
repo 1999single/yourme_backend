@@ -46,11 +46,11 @@ public final class JwtUtil {
         System.out.println(nowDate.getTime());
         System.out.println(expireDate.getTime());
         String token = JWT.create().withHeader(HEADER)
-                .withClaim("loginName", claim.getLoginName())
-                .withClaim("userName", claim.getUserName())
+                .withClaim("phoneNum", claim.getPhoneNum())
+                .withClaim("nickName", claim.getNickName())
                 .withIssuer(TOKEN_ISSUER)
                 .withSubject(TOKEN_SUBJECT)
-                .withAudience("APP1", "APP2")
+                .withAudience("user")
                 .withIssuedAt(nowDate)
                 .withExpiresAt(expireDate)
                 .sign(algorithm);
@@ -97,9 +97,9 @@ public final class JwtUtil {
         }
 
         public CustomClaim getCustomClaim() {
-            String loginName = jwt.getClaim("loginName").asString();
-            String userName = jwt.getClaim("userName").asString();
-            return new CustomClaim(loginName, userName);
+            String phoneNum = jwt.getClaim("phoneNum").asString();
+            String nickName = jwt.getClaim("nickName").asString();
+            return new CustomClaim(phoneNum, nickName);
         }
     }
 
@@ -108,14 +108,14 @@ public final class JwtUtil {
 
         public CustomClaim() { }
 
-        public CustomClaim(String loginName, String userName) {
-            this.loginName = loginName;
-            this.userName = userName;
+        public CustomClaim(String phoneNum, String nickName) {
+            this.phoneNum = phoneNum;
+            this.nickName = nickName;
         }
 
-        private String loginName;
+        private String nickName;
 
-        private String userName;
+        private String phoneNum;
 
     }
 

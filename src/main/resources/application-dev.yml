@@ -34,24 +34,19 @@ spring:
 #    type: redis
 #    ehcache:
 #      config: classpath:ehcache.xml
-#  redis:
-#    database: 0
-#    host: 127.0.0.1
-#    port: 6379
-#    password:
-#    timeout: 3000ms
-#    lettuce:
-#      pool:
-#        max-active: 8
-#        max-wait: -1ms
-#        max-idle: 8
-#        min-idle: 0
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    timeout: 3000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
 
-
-  #  devtools:
-  #    restart:
-  #        poll-interval: 3000ms
-  #        quiet-period: 2999ms
   jackson:
     date-format: yyyy-MM-dd
     time-zone: GMT+8
@@ -70,7 +65,7 @@ mybatis-plus:
     # 驼峰下划线转换
     map-underscore-to-camel-case: true
     # 配置的缓存的全局开关
-    cache-enabled: true
+    cache-enabled: false
     # 延时加载的开关
     lazy-loading-enabled: true
     # 开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
@@ -81,4 +76,13 @@ mybatis-plus:
 
 logging:
   config: classpath:logback-spring.xml
+
+sms:
+  account: 17758717836
+  tradeKey: 70fee1ed175640fcbdc2a174dba377ed
+  url: http://api.yunzhixin.com:11140
+
+rsa:
+  PrivateKey: MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAK4ywwZkie9w93l5BJXZYraPII5nqHUUKy6Ayb8ahXwlAr5jWS/lrbpNLuzajd1ke2lJ9YNLi7YoOp0rJAbubxKAgC5UHzd+JFMatSTjXDXP8+KvjaWrALQ6KNw7k7UMZQ7/SPkWtkxdYc8zSFXBXdd5VExvknzn6mS/o7FwfamvAgMBAAECgYBTHxXAbykCgD0WUZDGkDxyMEmwqfXQKBeS0RFzhww6+M4eWvmryUTkqP/DNWaMRe49h3UHeXzpJrkRVgyS4iNNPs3NhlNtI/E80B4Yrr5/o0/M9lxgQzOKUIHhpwIW5esYIJ1WO2fTbK5O5RGYfnFtodkbeXWM9Tc/gHrLFB7nwQJBAOJtIoacpxZ0qr1EtI6Ppra4ZllP3s0b4I2IHb5pB/fbyC9Sm3HvsQyKW+g27SSJG2oFerDc2XcyGdA+JxD4bZsCQQDE81BFes7Scq4uuJojwPsC1uQWgjmbyI44zrNIaq1G0PBFFD0Wz0LNUt6agNOwM0TGn9osEbrttKbzX2u7lT99AkEAklus54o2zuMWwkS42TWts4o6Thy8jaQpYBLN9xh5GBOusDgbVmhy7wI4Kj/mxakCWWO1TMFUqCFwYhTqt6N9ZQJBAJmPySfTYE1wQ2WEZBK6ljyZhtASC47uqg2bBOjS3HYZ1S1XYWZWhhSHp686AVQiNV7VJowz6tcKgx3BacOh1BUCQQCuO+qJqpxEltioPhhJ+Q7xDwaTR3SvNWmcajLp81HUAL/IKiCwFnGe0KslfuZnROT8hz02Xtmt+lfDGAOCa6LE
+  PublicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCuMsMGZInvcPd5eQSV2WK2jyCOZ6h1FCsugMm/GoV8JQK+Y1kv5a26TS7s2o3dZHtpSfWDS4u2KDqdKyQG7m8SgIAuVB83fiRTGrUk41w1z/Pir42lqwC0OijcO5O1DGUO/0j5FrZMXWHPM0hVwV3XeVRMb5J85+pkv6OxcH2prwIDAQAB
 

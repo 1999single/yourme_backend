@@ -1,5 +1,7 @@
 package com.single.yourme.core.aop;
 
+import com.single.yourme.core.exception.ParamException;
+import com.single.yourme.core.result.RestResult;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,15 +17,18 @@ import java.util.Map;
  * @author 1999single
  * @since 2019-12-01
  */
-//@ControllerAdvice(basePackages="com.single.yourme.controller")
+@ControllerAdvice(basePackages="com.single.yourme.controller")
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
-    public Map<String, Object> errorMsg(RuntimeException e){
-        Map<String, Object> errorMsgResult = new HashMap<>();
-        errorMsgResult.put("code", 500);
-        errorMsgResult.put("msg", "抛出异常");
-        return errorMsgResult;
+    public RestResult errorMsg(RuntimeException e){
+        return RestResult.fail();
+    }
+
+    @ExceptionHandler(ParamException.class)
+    @ResponseBody
+    public RestResult aramException(ParamException e){
+        return RestResult.fail().resetMessage("参数异常");
     }
 }

@@ -1,6 +1,6 @@
 package com.single.yourme.core.listener;
 
-import com.single.yourme.core.utils.ApplicationContextUtil;
+import com.single.yourme.core.utils.ApplicationContextUtils;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
@@ -15,6 +15,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 public class MainBusiListeners implements ApplicationListener<ContextRefreshedEvent> {
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        ApplicationContextUtil.setContext(event.getApplicationContext());
+        ApplicationContextUtils.setContext(event.getApplicationContext());
     }
 }
