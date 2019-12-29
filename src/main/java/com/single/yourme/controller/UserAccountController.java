@@ -55,7 +55,11 @@ public class UserAccountController {
 
     @GetMapping("/register-code")
     public RestResult sendRegisterCode(String phoneNum) {
-        smsService.sendRegisterSms(phoneNum, IdUtil.simpleUUID());
+        try {
+            smsService.sendRegisterSms(phoneNum, IdUtil.simpleUUID());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
         return RestResult.success();
     }
 
@@ -65,17 +69,4 @@ public class UserAccountController {
         return userAccountService.register(registerBo);
     }
 
-    @GetMapping("/test")
-    public RestResult test() {
-        String str = "single";
-        redisUtils.set("1999", str);
-        RestResult result = null;
-        try {
-            result = RestResult.success((String)redisUtils.get("1999"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error(e.getMessage());
-        }
-        return result;
-    }
 }
