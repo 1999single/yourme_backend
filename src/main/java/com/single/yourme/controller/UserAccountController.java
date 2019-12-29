@@ -67,13 +67,15 @@ public class UserAccountController {
 
     @GetMapping("/test")
     public RestResult test() {
-        String s = null;
+        String str = "single";
+        redisUtils.set("1999", str);
+        RestResult result = null;
         try {
-            s = ( String) redisUtils.get("test");
+            result = RestResult.success((String)redisUtils.get("1999"));
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
         }
-        return RestResult.success(s);
+        return result;
     }
 }
