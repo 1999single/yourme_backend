@@ -12,6 +12,7 @@ import com.single.yourme.core.utils.RedisUtils;
 import com.single.yourme.entity.UserAccount;
 import com.single.yourme.service.ISmsService;
 import com.single.yourme.service.IUserAccountService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindingResult;
@@ -32,6 +33,7 @@ import java.util.List;
  * @author 1999single
  * @since 2019-12-24
  */
+@Slf4j
 @RestController
 @RequestMapping("/user/account")
 public class UserAccountController {
@@ -70,6 +72,7 @@ public class UserAccountController {
             s = ( String) redisUtils.get("test");
         } catch (Exception e) {
             e.printStackTrace();
+            log.error(e.getMessage());
         }
         return RestResult.success(s);
     }
