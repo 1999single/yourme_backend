@@ -41,7 +41,7 @@ public class UserAccountController {
 
     @Autowired
     private IUserAccountService userAccountService;
-    
+
     @Autowired
     private RedisUtils redisUtils;
 
@@ -63,8 +63,14 @@ public class UserAccountController {
         return userAccountService.register(registerBo);
     }
 
-    @GetMapping("test")
+    @GetMapping("/test")
     public RestResult test() {
-        return RestResult.success(redisUtils.get("test"));
+        String s = null;
+        try {
+            s = ( String) redisUtils.get("test");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return RestResult.success(s);
     }
 }
