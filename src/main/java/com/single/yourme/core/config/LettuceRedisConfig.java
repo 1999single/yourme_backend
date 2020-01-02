@@ -100,6 +100,7 @@ public class LettuceRedisConfig {
         template.setKeySerializer(new StringRedisSerializer());
         template.setHashKeySerializer(new StringRedisSerializer());
         template.setConnectionFactory(redisConnectionFactory);
+        log.info("加载RedisTemplate成功");
         return template;
     }
 

@@ -56,7 +56,8 @@ public class UserAccountController {
     @GetMapping("/register-code")
     public RestResult sendRegisterCode(String phoneNum) {
         try {
-            smsService.sendRegisterSms(phoneNum, IdUtil.simpleUUID());
+            String code = smsService.getRegisterCode(phoneNum);
+            smsService.sendRegisterSms(phoneNum, IdUtil.simpleUUID(), code);
         } catch (Exception e) {
             log.error(e.getMessage());
         }

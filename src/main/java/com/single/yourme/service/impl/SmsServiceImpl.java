@@ -2,6 +2,7 @@ package com.single.yourme.service.impl;
 
 import com.single.yourme.core.config.LettuceRedisConfig;
 import com.single.yourme.core.message.SmsUtils;
+import com.single.yourme.core.utils.RedisUtils;
 import com.single.yourme.entity.Sms;
 import com.single.yourme.mapper.SmsMapper;
 import com.single.yourme.service.ISmsService;
@@ -24,19 +25,23 @@ public class SmsServiceImpl extends ServiceImpl<SmsMapper, Sms> implements ISmsS
     @Autowired
     private SmsMapper smsMapper;
 
+    @Autowired
+    private RedisUtils redisUtils;
+
     @Override
-    public String sendRegisterSms(String phoneNum, String uuid) {
-        String code = getRegisterCode(phoneNum);
-        SmsUtils.sendSms(phoneNum, uuid, code);
+    public String sendRegisterSms(String phoneNum, String uuid, String code) {
+         SmsUtils.sendSms(phoneNum, uuid, code);
         Sms sms = new Sms(uuid, phoneNum, code);
         smsMapper.insert(sms);
         return code;
     }
 
     @Override
-    @Cacheable(cacheNames = LettuceRedisConfig.CacheName.REGISTER_CODE_10MIN, key = "'register_code'+'['+#phoneNum+']'")
+     @Cacheable(cacheNames = LettuceRedisConfig.CacheName.REGISTER_CODE_10MIN, key = "'register_code'+'['+#phoneNum+']'")
     public String getRegisterCode(String phoneNum) {
         String str = String.valueOf(System.currentTimeMillis());
+        System.out.println(str);
+        redisUtils.set(phoneNum, str);
         return str.substring(str.length() - 6);
     }
 }

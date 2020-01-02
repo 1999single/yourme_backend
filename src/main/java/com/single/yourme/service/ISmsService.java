@@ -13,7 +13,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISmsService extends IService<Sms> {
 
-    String sendRegisterSms(String phoneNum, String uuid);
+    String sendRegisterSms(String phoneNum, String uuid, String code);
 
     String getRegisterCode(String phoneNum);
 }
