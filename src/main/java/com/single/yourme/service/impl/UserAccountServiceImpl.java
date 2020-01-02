@@ -59,10 +59,10 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
                 JwtUtil.CustomClaim customClaim = new JwtUtil.CustomClaim(userAccount.getPhoneNum(), userAccount.getNickname());
                 result = RestResult.success(JwtUtil.createToken(customClaim)).resetMessage("登陆成功！");
             } else {
-                result = RestResult.success().resetMessage("密码错误！");
+                result = RestResult.fail().resetMessage("账号/密码错误！");
             }
         } else {
-            result = RestResult.fail().resetMessage("账号不存在！");
+            result = RestResult.fail().resetMessage("账号/密码错误！");
         }
         return result;
     }
