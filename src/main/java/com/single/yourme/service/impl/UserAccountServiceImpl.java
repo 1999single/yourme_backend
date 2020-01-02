@@ -8,6 +8,7 @@ import cn.hutool.core.util.URLUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.single.yourme.bo.UserLoginBo;
 import com.single.yourme.bo.UserRegisterBo;
 import com.single.yourme.core.config.LettuceRedisConfig;
@@ -46,7 +47,9 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
     @Override
     public RestResult login(UserLoginBo loginBo) {
         RestResult result = null;
-        UserAccount userAccount = userAccountMapper.selectById(loginBo.getPhoneNum());
+        QueryWrapper<UserAccount> qw = new QueryWrapper<>();
+        qw.eq("phone_num", loginBo.getPhoneNum());
+        UserAccount userAccount = userAccountMapper.selectOne(qw);
         if (ObjectUtil.isNotNull(userAccount)) {
             RSA rsa = new RSA(privateKey, null);
             byte[] decrypt = rsa.decrypt(Base64.decode(loginBo.getPassword()), KeyType.PrivateKey);
@@ -67,11 +70,18 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
     @Override
     public RestResult register(UserRegisterBo registerBo) {
         RestResult result = null;
+
+        QueryWrapper<UserAccount> qw = new QueryWrapper<>();
+        qw.eq("phone_num", registerBo.getPhoneNum());
+        UserAccount userAccount = userAccountMapper.selectOne(qw);
+        if (ObjectUtil.isNotNull(userAccount)) {
+            return RestResult.fail().resetMessage("账号已存在！");
+        }
         UserAccount account = new UserAccount();
         account.setPhoneNum(registerBo.getPhoneNum());
         account.setNickname(registerBo.getPhoneNum());
-         String realCode = smsService.getRegisterCode(account.getPhoneNum());
-         if (registerBo.getCode().equals(realCode)) {
+        String realCode = smsService.getRegisterCode(account.getPhoneNum());
+        if (registerBo.getCode().equals(realCode)) {
             RSA rsa = new RSA(privateKey, null);
             byte[] decrypt = rsa.decrypt(Base64.decode(registerBo.getPassword()), KeyType.PrivateKey);
             String realPwd = StrUtil.str(decrypt, CharsetUtil.CHARSET_UTF_8);
