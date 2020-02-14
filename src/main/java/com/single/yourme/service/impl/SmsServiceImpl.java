@@ -37,11 +37,9 @@ public class SmsServiceImpl extends ServiceImpl<SmsMapper, Sms> implements ISmsS
     }
 
     @Override
-     @Cacheable(cacheNames = LettuceRedisConfig.CacheName.REGISTER_CODE_10MIN, key = "'register_code'+'['+#phoneNum+']'")
+    @Cacheable(cacheNames = LettuceRedisConfig.CacheName.REGISTER_CODE_10MIN, key = "'register_code'+'['+#phoneNum+']'")
     public String getRegisterCode(String phoneNum) {
         String str = String.valueOf(System.currentTimeMillis());
-        System.out.println(str);
-        redisUtils.set(phoneNum, str);
         return str.substring(str.length() - 6);
     }
 }

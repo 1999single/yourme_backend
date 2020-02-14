@@ -43,13 +43,18 @@ public class LettuceRedisConfig {
         String REDIS_CACHE_MANAGER_5MIN = "REDIS_CACHE_MANAGER_5MIN";
         String REDIS_CACHE_MANAGER_1HOUR = "REDIS_CACHE_MANAGER_1HOUR";
         String REGISTER_CODE_10MIN = "REGISTER_CODE_10MIN";
+        String ID_TO_PAIRCODE_10MIN = "ID_TO_PAIRCODE_10MIN";
+        String PAIRCODE_TO_ID_10MIN = "PAIRCODE_TO_ID_10MIN";
     }
 
     public enum CacheNamePair {
 
         REDIS_CACHE_MANAGER_5MIN("REDIS_CACHE_MANAGER_5MIN", Duration.ofMinutes(5)),
         REDIS_CACHE_MANAGER_1HOUR("REDIS_CACHE_MANAGER_1HOUR", Duration.ofHours(1)),
-        REGISTER_CODE_10MIN("REGISTER_CODE_10MIN", Duration.ofMinutes(10));
+        REGISTER_CODE_10MIN("REGISTER_CODE_10MIN", Duration.ofMinutes(10)),
+        ID_TO_PAIRCODE_10MIN("ID_TO_PAIRCODE_10MIN", Duration.ofDays(1)),
+        PAIRCODE_TO_ID_10MIN("PAIRCODE_TO_ID_10MIN", Duration.ofDays(1));
+
 
         public String name;
 

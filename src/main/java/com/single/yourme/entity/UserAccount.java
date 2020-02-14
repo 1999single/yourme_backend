@@ -45,5 +45,4 @@ public class UserAccount implements Serializable {
     @TableField("fere_id")
     private String fereId;
 
-
 }

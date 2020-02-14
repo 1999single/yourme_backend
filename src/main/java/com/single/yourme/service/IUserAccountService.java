@@ -19,4 +19,9 @@ public interface IUserAccountService extends IService<UserAccount> {
     RestResult login(UserLoginBo loginBo);
 
     RestResult register(UserRegisterBo registerBo);
+
+    String createPairCode(String id);
+
+    String getUserIdByPairCode(String pairCode);
+
 }

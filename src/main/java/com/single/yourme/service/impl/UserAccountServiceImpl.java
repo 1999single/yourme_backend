@@ -56,7 +56,7 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
             String originalPwd = StrUtil.str(decrypt, CharsetUtil.CHARSET_UTF_8);
             String SHA256Pwd = SecureUtil.sha256(originalPwd);
             if (SHA256Pwd.equals(userAccount.getAccountPwd())) {
-                JwtUtil.CustomClaim customClaim = new JwtUtil.CustomClaim(userAccount.getPhoneNum(), userAccount.getNickname());
+                JwtUtil.CustomClaim customClaim = new JwtUtil.CustomClaim(userAccount);
                 result = RestResult.success(JwtUtil.createToken(customClaim)).resetMessage("登陆成功！");
             } else {
                 result = RestResult.fail().resetMessage("账号/密码错误！");
@@ -94,4 +94,15 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         return result;
     }
 
+    @Override
+    @Cacheable(cacheNames = LettuceRedisConfig.CacheName.REGISTER_CODE_10MIN, key = "'register_code'+'['+#phoneNum+']'")
+    public String createPairCode(String id) {
+        return null;
+    }
+
+    @Override
+    @Cacheable(cacheNames = LettuceRedisConfig.CacheName.REGISTER_CODE_10MIN, key = "'pair_code'+'['+#pairCode+']'")
+    public String getUserIdByPairCode(String pairCode) {
+        return "3176016036";
+    }
 }

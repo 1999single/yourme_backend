@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import com.single.yourme.entity.UserAccount;
 import lombok.Data;
 
 import java.util.*;
@@ -48,6 +49,8 @@ public final class JwtUtil {
         String token = JWT.create().withHeader(HEADER)
                 .withClaim("phoneNum", claim.getPhoneNum())
                 .withClaim("nickName", claim.getNickName())
+                .withClaim("id", claim.getId())
+                .withClaim("fereId", claim.getFereId())
                 .withIssuer(TOKEN_ISSUER)
                 .withSubject(TOKEN_SUBJECT)
                 .withAudience("user")
@@ -99,7 +102,9 @@ public final class JwtUtil {
         public CustomClaim getCustomClaim() {
             String phoneNum = jwt.getClaim("phoneNum").asString();
             String nickName = jwt.getClaim("nickName").asString();
-            return new CustomClaim(phoneNum, nickName);
+            String id = jwt.getClaim("id").asString();
+            String fereId = jwt.getClaim("fereId").asString();
+            return new CustomClaim(phoneNum, nickName, id, fereId);
         }
     }
 
@@ -108,15 +113,27 @@ public final class JwtUtil {
 
         public CustomClaim() { }
 
-        public CustomClaim(String phoneNum, String nickName) {
+        public CustomClaim(String phoneNum, String nickName, String id, String fereId) {
             this.phoneNum = phoneNum;
             this.nickName = nickName;
+            this.id = id;
+            this.fereId = fereId;
+        }
+
+        public CustomClaim(UserAccount account) {
+            this.phoneNum = account.getPhoneNum();
+            this.nickName = account.getNickname();
+            this.id = account.getId();
+            this.fereId = account.getFereId();
         }
 
         private String nickName;
 
         private String phoneNum;
 
+        private String id;
+
+        private String fereId;
     }
 
 }

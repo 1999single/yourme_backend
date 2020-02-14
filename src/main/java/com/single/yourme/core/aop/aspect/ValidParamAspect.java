@@ -30,7 +30,7 @@ import java.util.List;
 public class ValidParamAspect {
 
     @Pointcut("@annotation(validParam)")
-    public void annotationPointcut(ValidParam validParam){}
+    public void annotationPointcut(ValidParam validParam){ }
 
     @Before("annotationPointcut(validParam)")
     public void around(JoinPoint joinPoint, ValidParam validParam) throws Throwable {

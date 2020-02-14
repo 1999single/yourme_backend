@@ -2,6 +2,8 @@ package com.single.yourme.controller;
 
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.single.yourme.bo.UserLoginBo;
 import com.single.yourme.bo.UserRegisterBo;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.time.Duration;
 import java.util.List;
 
 /**
@@ -68,6 +71,43 @@ public class UserAccountController {
     @ValidParam
     public RestResult register(@Valid UserRegisterBo registerBo, BindingResult errors) {
         return userAccountService.register(registerBo);
+    }
+
+    @GetMapping("/pair-code")
+    public RestResult createPairCode(String id) {
+        String pairCode = (String) redisUtils.get("ID_TO_PAIRCODE_10MIN::id[" + id + "]");
+        if (StrUtil.isEmpty(pairCode)) {
+            boolean f;
+            do {
+                pairCode = String.valueOf(RandomUtil.randomInt(10000000, 99999999));
+                f = redisUtils.get("PAIRCODE_TO_ID_10MIN::pair_code[" + pairCode + "]") != null;
+            }while (f);
+            redisUtils.set("ID_TO_PAIRCODE_10MIN::id[" + id + "]", pairCode, Duration.ofDays(1).getSeconds());
+            redisUtils.set("PAIRCODE_TO_ID_10MIN::pair_code[" + pairCode + "]", id, Duration.ofDays(1).getSeconds());
+        }
+        return RestResult.success(pairCode);
+    }
+
+    @PutMapping("/pair")
+    public RestResult pair(String id, String pairCode) {
+        String mate = (String) redisUtils.get("PAIRCODE_TO_ID_10MIN::pair_code[" + pairCode + "]");
+        String oPairCode = (String) redisUtils.get("ID_TO_PAIRCODE_10MIN::id[" + id + "]");
+        if (StrUtil.isEmpty(mate)) {
+            return RestResult.fail().resetMessage("配对码失效！");
+        }
+        if (StrUtil.equals(pairCode, oPairCode)) {
+            return RestResult.fail().resetMessage("不可以和自己生孩子！");
+        }
+        UserAccount account0 = new UserAccount();
+        account0.setId(id);
+        account0.setFereId(mate);
+        userAccountService.updateById(account0);
+        UserAccount account1 = new UserAccount();
+        account1.setId(mate);
+        account1.setFereId(id);
+        userAccountService.updateById(account1);
+        redisUtils.del("PAIRCODE_TO_ID_10MIN::pair_code[" + pairCode + "]", "ID_TO_PAIRCODE_10MIN::id[" + mate + "]", "PAIRCODE_TO_ID_10MIN::pair_code[" + oPairCode + "]", "ID_TO_PAIRCODE_10MIN::id[" + id + "]");
+        return RestResult.success();
     }
 
 }
