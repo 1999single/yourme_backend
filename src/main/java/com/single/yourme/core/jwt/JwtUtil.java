@@ -47,7 +47,7 @@ public final class JwtUtil {
 
         Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
         Date tempDate = new Date();
-        Date issuedDate = new Date(tempDate.getTime() + Duration.ofMinutes(3).toMillis());
+        Date issuedDate = new Date(tempDate.getTime() - Duration.ofMinutes(3).toMillis());
         Date notBeforeDate = issuedDate;
         Date expireDate = new Date(issuedDate.getTime() + TOKEN_LIFETIME);
         String token = JWT.create().withHeader(HEADER)
