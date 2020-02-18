@@ -7,6 +7,8 @@ import com.auth0.jwt.interfaces.JWTVerifier;
 import com.single.yourme.entity.UserAccount;
 import lombok.Data;
 
+
+import java.time.Duration;
 import java.util.*;
 
 /**
@@ -44,10 +46,10 @@ public final class JwtUtil {
     public static String createToken(CustomClaim claim) {
 
         Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
-        Date nowDate = new Date();
-        Date expireDate = new Date(nowDate.getTime() + TOKEN_LIFETIME);
-        System.out.println(nowDate.getTime());
-        System.out.println(expireDate.getTime());
+        Date tempDate = new Date();
+        Date issuedDate = new Date(tempDate.getTime() + Duration.ofMinutes(3).toMillis());
+        Date notBeforeDate = issuedDate;
+        Date expireDate = new Date(issuedDate.getTime() + TOKEN_LIFETIME);
         String token = JWT.create().withHeader(HEADER)
                 .withClaim("phoneNum", claim.getPhoneNum())
                 .withClaim("nickName", claim.getNickName())
@@ -56,9 +58,9 @@ public final class JwtUtil {
                 .withIssuer(TOKEN_ISSUER)
                 .withSubject(TOKEN_SUBJECT)
                 .withAudience("user")
-                .withIssuedAt(nowDate)
+                .withIssuedAt(issuedDate)
                 .withExpiresAt(expireDate)
-                .withNotBefore(nowDate)
+                .withNotBefore(notBeforeDate)
                 .sign(algorithm);
         return token;
     }
