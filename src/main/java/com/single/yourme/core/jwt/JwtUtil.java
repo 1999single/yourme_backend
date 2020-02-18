@@ -27,6 +27,8 @@ public final class JwtUtil {
 
     private static final Long TOKEN_LIFETIME = 10 * 60 * 60 * 1000L;
 
+
+
     private static final Map<String, Object> HEADER;
 
     static {
@@ -56,6 +58,7 @@ public final class JwtUtil {
                 .withAudience("user")
                 .withIssuedAt(nowDate)
                 .withExpiresAt(expireDate)
+                .withNotBefore(nowDate)
                 .sign(algorithm);
         return token;
     }
