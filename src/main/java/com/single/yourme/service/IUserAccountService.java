@@ -2,7 +2,7 @@ package com.single.yourme.service;
 
 import com.single.yourme.bo.UserLoginBo;
 import com.single.yourme.bo.UserRegisterBo;
-import com.single.yourme.core.result.RestResult;
+import com.single.yourme.core.result.Result;
 import com.single.yourme.entity.UserAccount;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -16,9 +16,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserAccountService extends IService<UserAccount> {
 
-    RestResult login(UserLoginBo loginBo);
+    Result login(UserLoginBo loginBo);
 
-    RestResult register(UserRegisterBo registerBo);
+    Result register(UserRegisterBo registerBo);
 
     String createPairCode(String id);
 

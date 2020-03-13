@@ -1,5 +1,8 @@
 package com.single.yourme.core.jwt;
 
+import com.alibaba.fastjson.JSON;
+import com.auth0.jwt.exceptions.InvalidClaimException;
+import com.single.yourme.core.result.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -33,11 +36,10 @@ public class JwtRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         String token = (String) authenticationToken.getCredentials();
-        if (token == null || "".equals(token)) {
-            throw new AuthenticationException("对不起，你真的没有我帅。");
-        }
-        if (!"123456".equals(token)) {
-            throw new AuthenticationException("密码错误!");
+        try {
+            JwtUtil.parseToken(token);
+        } catch (Exception ice) {
+            throw new AuthenticationException(JSON.toJSONString(Result.builder().invalid("身份登录过期，请重新登录？！").build()));
         }
         return new SimpleAuthenticationInfo(token, token, getName());
     }

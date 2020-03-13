@@ -1,12 +1,8 @@
 package com.single.yourme.core.websocket;
 
-import cn.hutool.log.LogFactory;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.single.yourme.core.result.RestResult;
+import com.single.yourme.core.result.Result;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -24,8 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 2019-12-08
  */
 @Slf4j
-//@ServerEndpoint("/im/{userId}")
-//@Component
+@ServerEndpoint("/im/{userId}")
+@Component
 public class WebSocketServer {
 
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
@@ -51,7 +47,7 @@ public class WebSocketServer {
         log.info("有新窗口开始监听:"+userId+",当前在线人数为" + getOnlineCount());
         this.userId=userId;
         try {
-            sendMessage(JSON.toJSONString(RestResult.success()));
+            sendMessage(JSON.toJSONString(Result.builder().success().build()));
         } catch (IOException e) {
             log.error("websocket IO异常");
         }

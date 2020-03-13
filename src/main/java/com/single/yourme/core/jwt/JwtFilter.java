@@ -94,7 +94,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
             HttpServletResponse httpResponse = WebUtils.toHttp(response);
             httpResponse.setCharacterEncoding("UTF-8");
             httpResponse.setContentType("application/json;charset=UTF-8");
-            response.getWriter().print("对不起你真的没有我帅");
+            response.getWriter().print(e.getMessage());
         } catch (Exception ex) {
 
         }

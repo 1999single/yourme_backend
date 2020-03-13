@@ -4,7 +4,6 @@ import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.core.util.URLUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
@@ -13,7 +12,7 @@ import com.single.yourme.bo.UserLoginBo;
 import com.single.yourme.bo.UserRegisterBo;
 import com.single.yourme.core.config.LettuceRedisConfig;
 import com.single.yourme.core.jwt.JwtUtil;
-import com.single.yourme.core.result.RestResult;
+import com.single.yourme.core.result.Result;
 import com.single.yourme.entity.UserAccount;
 import com.single.yourme.mapper.UserAccountMapper;
 import com.single.yourme.service.ISmsService;
@@ -45,8 +44,8 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
     private ISmsService smsService;
 
     @Override
-    public RestResult login(UserLoginBo loginBo) {
-        RestResult result = null;
+    public Result login(UserLoginBo loginBo) {
+        Result result = null;
         QueryWrapper<UserAccount> qw = new QueryWrapper<>();
         qw.eq("phone_num", loginBo.getPhoneNum());
         UserAccount userAccount = userAccountMapper.selectOne(qw);
@@ -57,25 +56,25 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
             String SHA256Pwd = SecureUtil.sha256(originalPwd);
             if (SHA256Pwd.equals(userAccount.getAccountPwd())) {
                 JwtUtil.CustomClaim customClaim = new JwtUtil.CustomClaim(userAccount);
-                result = RestResult.success(JwtUtil.createToken(customClaim)).resetMessage("登陆成功！");
+                result = Result.builder().success("登陆成功！").build();
             } else {
-                result = RestResult.fail().resetMessage("账号/密码错误！");
+                result = Result.builder().fail("账号/密码错误！").build();
             }
         } else {
-            result = RestResult.fail().resetMessage("账号/密码错误！");
+            result = Result.builder().fail("账号/密码错误！").build();
         }
         return result;
     }
 
     @Override
-    public RestResult register(UserRegisterBo registerBo) {
-        RestResult result = null;
+    public Result register(UserRegisterBo registerBo) {
+        Result result = null;
 
         QueryWrapper<UserAccount> qw = new QueryWrapper<>();
         qw.eq("phone_num", registerBo.getPhoneNum());
         UserAccount userAccount = userAccountMapper.selectOne(qw);
         if (ObjectUtil.isNotNull(userAccount)) {
-            return RestResult.fail().resetMessage("账号已存在！");
+            return Result.builder().fail("账号已存在！").build();
         }
         UserAccount account = new UserAccount();
         account.setPhoneNum(registerBo.getPhoneNum());
@@ -87,9 +86,9 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
             String realPwd = StrUtil.str(decrypt, CharsetUtil.CHARSET_UTF_8);
             account.setAccountPwd(SecureUtil.sha256(realPwd));
             userAccountMapper.insert(account);
-            result = RestResult.success();
+            result = Result.builder().success().build();
         } else {
-            result = RestResult.fail().resetMessage("验证码错误！");
+            result = Result.builder().fail("验证码错误！").build();
         }
         return result;
     }

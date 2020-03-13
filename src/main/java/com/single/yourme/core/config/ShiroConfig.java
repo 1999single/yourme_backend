@@ -34,7 +34,7 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 添加自己的过滤器并且取名为jwt
         Map<String, Filter> filterMap = new HashMap<>();
-        filterMap.put("jwt", new JwtFilter());
+         filterMap.put("jwt", new JwtFilter());
         shiroFilterFactoryBean.setFilters(filterMap);
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         /**
@@ -42,12 +42,14 @@ public class ShiroConfig {
          * http://shiro.apache.org/web.html#urls-
          */
         Map<String, String> filterRuleMap = new LinkedHashMap<String, String>();
-        // 访问401和404页面不通过我们的Filter
-        filterRuleMap.put("/401", "anon");
-        filterRuleMap.put("/404", "anon");
+        // 访问不通过Filter
+//        filterRuleMap.put("/swagger-ui.html", "anon");
+//        filterRuleMap.put("/user/account/login", "anon");
+//        filterRuleMap.put("/user/account/register", "anon");
+//        filterRuleMap.put("/user/account/register-code", "anon");
         filterRuleMap.put("/**", "anon");
         // 所有的请求通过我们自己的JWT filter
-        // filterRuleMap.put("/**", "jwt");
+//        filterRuleMap.put("/**", "jwt");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return shiroFilterFactoryBean;
 

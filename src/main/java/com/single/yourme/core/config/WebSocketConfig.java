@@ -13,21 +13,8 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
  * @author 1999single
  * @since 2019-12-07
  */
-//@Configuration
-//@EnableWebSocketMessageBroker
-public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-
-//    @Override
-//    public void registerStompEndpoints(StompEndpointRegistry registry) {
-//        registry.addEndpoint("/socket").setAllowedOrigins("*").withSockJS();
-//        registry.addEndpoint("/wsuser").setAllowedOrigins("*").withSockJS();
-//    }
-//
-//    @Override
-//    public void configureMessageBroker(MessageBrokerRegistry registry) {
-//        registry.enableSimpleBroker("/sub", "/queue");
-//        registry.setApplicationDestinationPrefixes("/request");
-//    }
+@Configuration
+public class WebSocketConfig {
 
     @Bean
     public ServerEndpointExporter serverEndpointExporter() {

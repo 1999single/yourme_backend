@@ -1,13 +1,9 @@
 package com.single.yourme.core.aop;
 
-import com.single.yourme.core.exception.ParamException;
-import com.single.yourme.core.result.RestResult;
+import com.single.yourme.core.result.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -22,13 +18,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
-    public RestResult errorMsg(RuntimeException e){
-        return RestResult.fail();
+    public Result errorMsg(RuntimeException e){
+        return Result.builder().fail("小Me正在赶来的路上:)").build();
     }
 
-    @ExceptionHandler(ParamException.class)
-    @ResponseBody
-    public RestResult aramException(ParamException e){
-        return RestResult.fail().resetMessage("参数异常");
-    }
 }

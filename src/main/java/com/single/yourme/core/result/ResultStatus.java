@@ -2,28 +2,20 @@ package com.single.yourme.core.result;
 
 public enum ResultStatus {
 
-    //操作成功
+    // 操作成功
     SUCCESS(0, "success"),
-    //自定义错误内容
-    CUSTOM_FAIL(1, ""),
-    //未登录
-    NOT_LOGIN(2, "当前为游客状态，请先登录"),
-    //服务器错误
-    FAIL(3, "服务器被你帅崩了"),
-    //余额不足
-    INSUFFICIENT_FUNDS(4, "余额不足"),
-    //未注册
-    NOT_REGISTER(5, "未注册"),
-    //接口参数被篡改
-    REQUEST_DATA_EXCEPTION(-1, "对不起，你真的没有我帅");
+    // 操作失败
+    FAIL(1, "fail"),
+    // 操作不合法
+    INVALID(2, "invalid");
 
     private int code;
 
-    private String message;
+    private String msg;
 
-    ResultStatus(int code, String message) {
+    ResultStatus(int code, String msg) {
         this.code = code;
-        this.message = message;
+        this.msg = msg;
     }
 
     public int getCode() {
@@ -34,11 +26,11 @@ public enum ResultStatus {
         this.code = code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMSg(String message) {
+        this.msg = message;
     }
 }
