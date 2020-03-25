@@ -56,7 +56,7 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
             String SHA256Pwd = SecureUtil.sha256(originalPwd);
             if (SHA256Pwd.equals(userAccount.getAccountPwd())) {
                 JwtUtil.CustomClaim customClaim = new JwtUtil.CustomClaim(userAccount);
-                result = Result.builder().success("登陆成功！").build();
+                result = Result.builder().success("登陆成功！").data(JwtUtil.createToken(customClaim)).build();
             } else {
                 result = Result.builder().fail("账号/密码错误！").build();
             }
