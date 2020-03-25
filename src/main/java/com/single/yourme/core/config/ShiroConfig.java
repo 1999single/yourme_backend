@@ -49,8 +49,7 @@ public class ShiroConfig {
         filterRuleMap.put("/user/account/register-code", "anon");
 //        filterRuleMap.put("/**", "anon");
         // 所有的请求通过我们自己的JWT filter
-        filterRuleMap.put("/im/*", "anon");
-        filterRuleMap.put("/**", "jwt");
+       filterRuleMap.put("/**", "jwt");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return shiroFilterFactoryBean;
 
