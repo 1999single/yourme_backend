@@ -39,6 +39,7 @@ public class JwtRealm extends AuthorizingRealm {
         try {
             JwtUtil.parseToken(token);
         } catch (Exception ice) {
+            ice.printStackTrace();
             throw new AuthenticationException(JSON.toJSONString(Result.builder().invalid("身份登录过期，请重新登录？！").build()));
         }
         return new SimpleAuthenticationInfo(token, token, getName());

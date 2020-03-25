@@ -43,13 +43,14 @@ public class ShiroConfig {
          */
         Map<String, String> filterRuleMap = new LinkedHashMap<String, String>();
         // 访问不通过Filter
-//        filterRuleMap.put("/swagger-ui.html", "anon");
-//        filterRuleMap.put("/user/account/login", "anon");
-//        filterRuleMap.put("/user/account/register", "anon");
-//        filterRuleMap.put("/user/account/register-code", "anon");
-        filterRuleMap.put("/**", "anon");
+        filterRuleMap.put("/swagger-ui.html", "anon");
+        filterRuleMap.put("/user/account/login", "anon");
+        filterRuleMap.put("/user/account/register", "anon");
+        filterRuleMap.put("/user/account/register-code", "anon");
+//        filterRuleMap.put("/**", "anon");
         // 所有的请求通过我们自己的JWT filter
-//        filterRuleMap.put("/**", "jwt");
+        filterRuleMap.put("/im/*", "anon");
+        filterRuleMap.put("/**", "jwt");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return shiroFilterFactoryBean;
 

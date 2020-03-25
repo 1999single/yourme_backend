@@ -18,7 +18,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
-    public Result errorMsg(RuntimeException e){
+    public Result errorMsg(RuntimeException e) {
+        e.printStackTrace();
         return Result.builder().fail("小Me正在赶来的路上:)").build();
     }
 
