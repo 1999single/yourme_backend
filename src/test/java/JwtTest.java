@@ -72,5 +72,6 @@ public class JwtTest {
         byte[] encrypt = rsa.encrypt(StrUtil.bytes("Xu595082586.", CharsetUtil.CHARSET_UTF_8), KeyType.PublicKey);
         String secret = URLUtil.encode(Base64.encode(encrypt));
         System.out.println(secret);
+        
     }
 }

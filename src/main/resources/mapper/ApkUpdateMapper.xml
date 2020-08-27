@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.single.yourme.mapper.ApkUpdateMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.single.yourme.entity.ApkUpdate">
+        <id column="id" property="id" />
+        <result column="app_name" property="appName" />
+        <result column="version" property="newVersion" />
+        <result column="message" property="updateLog" />
+        <result column="apk_size" property="targetSize" />
+        <result column="force" property="constraint" />
+        <result column="date" property="date" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, app_name, version, message, apk_size, force, date, new_md5, apk_file_url
+    </sql>
+    <select id="getLastedApkVersion" resultMap="BaseResultMap">
+        select * from apk_update order by date desc limit 1;
+    </select>
+
+</mapper>
