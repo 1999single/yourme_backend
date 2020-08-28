@@ -8,6 +8,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.single.yourme.YourMeApplication;
 import com.single.yourme.core.jwt.JwtUtil;
+import com.single.yourme.core.message.SmsUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -68,10 +69,10 @@ public class JwtTest {
 
     @Test
     public void password() {
-        RSA rsa = new RSA(null, "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCuMsMGZInvcPd5eQSV2WK2jyCOZ6h1FCsugMm/GoV8JQK+Y1kv5a26TS7s2o3dZHtpSfWDS4u2KDqdKyQG7m8SgIAuVB83fiRTGrUk41w1z/Pir42lqwC0OijcO5O1DGUO/0j5FrZMXWHPM0hVwV3XeVRMb5J85+pkv6OxcH2prwIDAQAB");
+        /*RSA rsa = new RSA(null, "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCuMsMGZInvcPd5eQSV2WK2jyCOZ6h1FCsugMm/GoV8JQK+Y1kv5a26TS7s2o3dZHtpSfWDS4u2KDqdKyQG7m8SgIAuVB83fiRTGrUk41w1z/Pir42lqwC0OijcO5O1DGUO/0j5FrZMXWHPM0hVwV3XeVRMb5J85+pkv6OxcH2prwIDAQAB");
         byte[] encrypt = rsa.encrypt(StrUtil.bytes("Xu595082586.", CharsetUtil.CHARSET_UTF_8), KeyType.PublicKey);
         String secret = URLUtil.encode(Base64.encode(encrypt));
-        System.out.println(secret);
-        
+        System.out.println(secret);*/
+        SmsUtils.sendSms("17758717836", "0103", "7896");
     }
 }

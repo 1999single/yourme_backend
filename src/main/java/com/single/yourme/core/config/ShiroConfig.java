@@ -48,6 +48,7 @@ public class ShiroConfig {
         filterRuleMap.put("/user/account/register", "anon");
         filterRuleMap.put("/user/account/register-code", "anon");
         filterRuleMap.put("/apk-update/version", "anon");
+        filterRuleMap.put("/im/**", "anon");
 //        filterRuleMap.put("/**", "anon");
         // 所有的请求通过我们自己的JWT filter
        filterRuleMap.put("/**", "jwt");
