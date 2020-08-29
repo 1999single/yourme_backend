@@ -1,6 +1,8 @@
 package com.single.yourme;
 
 import com.single.yourme.core.listener.MainBusiListeners;
+
+import com.single.yourme.core.nettywebsocket.NioWebSocketServer;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -30,8 +32,15 @@ public class YourMeApplication {
         SpringApplication application = new SpringApplication(YourMeApplication.class);
         application.addListeners(new MainBusiListeners());
         application.run(args);
+
+        try {
+            new NioWebSocketServer(5950).start();
+        } catch (Exception e) {
+
+        }
     }
 
+    /*
     @Bean
     public ServletWebServerFactory servletContainer() {
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
@@ -59,5 +68,5 @@ public class YourMeApplication {
         // 监听到http的端口号后转向到的https的端口号
         connector.setRedirectPort(8443);
         return connector;
-    }
+    }*/
 }

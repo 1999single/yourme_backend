@@ -134,14 +134,17 @@ import java.util.concurrent.ConcurrentHashMap;
 //        WebSocketServer.onlineCount--;
 //    }
 //}
-@ServerEndpoint("/im/{userId}")
-@Component
+
+//@ServerEndpoint("/im/{userId}")
+//@Component
 @Slf4j
 public class WebSocketServer {
     /**
      * 存放所有在线的客户端
      */
     private static Map<String, Session> clients = new ConcurrentHashMap<>();
+
+    private int t = 1;
 
     @OnOpen
     public void onOpen(Session session, @PathParam("userId") String userId) {
@@ -178,6 +181,7 @@ public class WebSocketServer {
     @OnMessage
     public void onMessage(String message) {
         log.info("服务端收到客户端发来的消息: {}", message);
+        log.info("times: {}", t++);
         this.sendAll(message);
     }
 

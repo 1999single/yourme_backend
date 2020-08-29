@@ -1,9 +1,9 @@
 server:
   port: 8443
-  ssl:
-    key-store: classpath:cert.pfx
-    key-store-password: n9chHP02
-    key-store-type: PKCS12
+  #ssl:
+    #key-store: classpath:cert.pfx
+    #key-store-password: n9chHP02
+    #key-store-type: PKCS12
 
 spring:
   datasource:
@@ -36,7 +36,7 @@ spring:
 #      config: classpath:ehcache.xml
   redis:
     database: 0
-    host: 120.78.144.184
+    host: localhost
     port: 6379
     password:
     timeout: 3000ms
