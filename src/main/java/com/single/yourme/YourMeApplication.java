@@ -40,7 +40,6 @@ public class YourMeApplication {
         }
     }
 
-    /*
     @Bean
     public ServletWebServerFactory servletContainer() {
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
@@ -68,5 +67,5 @@ public class YourMeApplication {
         // 监听到http的端口号后转向到的https的端口号
         connector.setRedirectPort(8443);
         return connector;
-    }*/
+    }
 }

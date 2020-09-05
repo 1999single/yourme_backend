@@ -1,9 +1,9 @@
 server:
   port: 8443
-  #ssl:
-    #key-store: classpath:cert.pfx
-    #key-store-password: n9chHP02
-    #key-store-type: PKCS12
+  ssl:
+    key-store: classpath:cert.pfx
+    key-store-password: n9chHP02
+    key-store-type: PKCS12
 
 spring:
   datasource:
