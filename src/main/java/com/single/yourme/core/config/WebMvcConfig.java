@@ -56,7 +56,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return new CorsFilter(urlBasedCorsConfigurationSource);
     }
 
-    @Override
+    /*@Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         for (int i = 0; i < converters.size(); i++) {
             if (converters.get(i) instanceof MappingJackson2HttpMessageConverter) {
@@ -71,6 +71,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 converters.set(i, converter);
                 break;
             }
-        }// end for
+        }*/
     }
 }
