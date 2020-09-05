@@ -17,11 +17,14 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
+import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * NettyServer Netty服务器配置
@@ -55,10 +58,11 @@ public class NioWebSocketServer {
                             //websocket协议本身是基于http协议的，所以这边也要使用http解编码器
                             ch.pipeline().addLast(new HttpServerCodec());
                             //以块的方式来写的处理器
+                            ch.pipeline().addLast(new IdleStateHandler(20, 0, 0, TimeUnit.SECONDS));
                             ch.pipeline().addLast(new ChunkedWriteHandler());
                             ch.pipeline().addLast(new HttpObjectAggregator(8192));
                             ch.pipeline().addLast(new NioWebSocketHandler());
-                            ch.pipeline().addLast(new WebSocketServerProtocolHandler("/ws", null, true, 65536 * 10));
+                            ch.pipeline().addLast(new WebSocketServerProtocolHandler("/yourme/im", null, true, 65536 * 10));
                         }
                     });
             ChannelFuture cf = sb.bind().sync(); // 服务器异步创建绑定

@@ -20,12 +20,20 @@ import java.util.Map;
  * @author: 1999single
  * @date: 2020/8/28 21:29
  */
+@ChannelHandler.Sharable
 @Slf4j
-public class NioWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+public class NioWebSocketHandler extends SimpleChannelInboundHandler<WebSocketFrame> {
+
+    int t = 0;
+
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+        super.userEventTriggered(ctx, evt);
+    }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("与客户端建立连接，通道开启！");
+        System.out.println("与客户端建立连接，通道开启！" );
         NioWebSocketChannelPool.channels.add(ctx.channel());
         super.channelActive(ctx);
     }
@@ -37,35 +45,50 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<TextWebSock
         super.channelInactive(ctx);
     }
 
-
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         //首次连接是FullHttpRequest，处理参数 by zhengkai.blog.csdn.net
         if (null != msg && msg instanceof FullHttpRequest) {
             FullHttpRequest request = (FullHttpRequest) msg;
             String uri = request.uri();
-
             Map paramMap=getUrlParams(uri);
             System.out.println("接收到的参数是："+JSON.toJSONString(paramMap));
+            String id = getIdFromUrl(uri);
+            System.out.println("id: " + id);
+            log.debug("接收到客户端的握手包：{}", id);
             //如果url包含参数，需要处理
             if(uri.contains("?")){
                 String newUri=uri.substring(0,uri.indexOf("?"));
                 System.out.println(newUri);
                 request.setUri(newUri);
             }
-
         }else if(msg instanceof TextWebSocketFrame){
             //正常的TEXT消息类型
             TextWebSocketFrame frame=(TextWebSocketFrame)msg;
-            System.out.println("客户端收到服务器数据：" +frame.text());
+            // System.out.println("客户端收到服务器数据：" +frame.text());
+            System.out.println(" read text: " + frame.text());
+            NioWebSocketChannelPool.channels.writeAndFlush(new TextWebSocketFrame("read"));
             NioWebSocketChannelPool.channels.writeAndFlush(new TextWebSocketFrame(frame.text()));
         }
         super.channelRead(ctx, msg);
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) throws Exception {
-
+    protected void channelRead0(ChannelHandlerContext context, WebSocketFrame frame) throws Exception {
+        // log.info("数据类型：{}", frame.getClass());
+        System.out.println("id: " + context.channel().id());
+        if (frame instanceof PingWebSocketFrame) {
+            // pingWebSocketFrameHandler(ctx, (PingWebSocketFrame) frame);
+            log.info("二进制：{}", frame.toString());
+        } else if (frame instanceof TextWebSocketFrame) {
+            // textWebSocketFrameHandler(ctx, (TextWebSocketFrame) frame);
+            System.out.println(" read0 text: " + ((TextWebSocketFrame) frame).text());
+            NioWebSocketChannelPool.channels.writeAndFlush(new TextWebSocketFrame("read0"));
+            NioWebSocketChannelPool.channels.writeAndFlush(new TextWebSocketFrame(((TextWebSocketFrame) frame).text()));
+        } else if (frame instanceof CloseWebSocketFrame) {
+            // closeWebSocketFrameHandler(ctx, (CloseWebSocketFrame) frame);
+            log.info("关闭：{}", frame.toString());
+        }
     }
 //    @Override
 //    protected void channelRead0(ChannelHandlerContext ctx, WebSocketFrame frame) {
@@ -106,12 +129,13 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<TextWebSock
         log.debug("客户端请求参数：{}", params);
     }
 
-    private static Map getUrlParams(String url){
-        Map<String,String> map = new HashMap<>();
+    private static Map<String, String> getUrlParams (String url){
+        Map<String, String> map = new HashMap<>();
         url = url.replace("?",";");
         if (!url.contains(";")){
             return map;
         }
+        String str;
         if (url.split(";").length > 0){
             String[] arr = url.split(";")[1].split("&");
             for (String s : arr){
@@ -120,10 +144,27 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<TextWebSock
                 map.put(key,value);
             }
             return  map;
-
         }else{
             return map;
         }
     }
+
+    private static String getIdFromUrl(String url){
+        int postion = url.lastIndexOf('?');
+        String params = url.substring(postion);
+        String[] arr = params.split("&");
+        String value = "";
+        for (String s : arr){
+            System.out.println("string = " + s);
+            String k = s.split("=")[0];
+            String v = s.split("=")[1];
+            if ("id".equals(k)) {
+                value = v;
+            }
+        }
+        return value;
+    }
 }
+
+
 

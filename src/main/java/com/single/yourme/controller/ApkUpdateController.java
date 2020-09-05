@@ -27,14 +27,8 @@ public class ApkUpdateController {
     private IApkUpdateService apkUpdateService;
 
     @GetMapping("/version")
-    public ApkUpdate getLastedApkVersion(String appKey, String version) {
+    public Result<ApkUpdate> getLastedApkVersion() {
         ApkUpdate apkUpdate = apkUpdateService.getLastedApkVersion();
-        System.out.println(apkUpdate);
-        if (apkUpdate.getNewVersion().compareTo(version) > 0) {
-            apkUpdate.setUpdate("Yes");
-        } else {
-            apkUpdate.setUpdate("N0");
-        }
-        return apkUpdate;
+        return Result.<ApkUpdate>builder().success().data(apkUpdate).build();
     }
 }

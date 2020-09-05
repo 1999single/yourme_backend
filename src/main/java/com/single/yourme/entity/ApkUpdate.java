@@ -40,18 +40,16 @@ public class ApkUpdate implements Serializable {
 
     private String appName;
 
-    private String newVersion;
+    private String version;
 
-    private String updateLog;
+    private String message;
 
-    private String targetSize;
+    private String apkSize;
 
-    private Boolean constraint;
+    private Boolean force;
 
     private String date;
 
-    private String update;
-
-    private String newMd5;
+    private String apkFileUrl;
 
 }

@@ -6,16 +6,17 @@
     <resultMap id="BaseResultMap" type="com.single.yourme.entity.ApkUpdate">
         <id column="id" property="id" />
         <result column="app_name" property="appName" />
-        <result column="version" property="newVersion" />
-        <result column="message" property="updateLog" />
-        <result column="apk_size" property="targetSize" />
-        <result column="force" property="constraint" />
+        <result column="version" property="version" />
+        <result column="message" property="message" />
+        <result column="apk_size" property="apkSize" />
+        <result column="force" property="force" />
         <result column="date" property="date" />
+        <result column="apk_file_url" property="apkFileUrl" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, app_name, version, message, apk_size, force, date, new_md5, apk_file_url
+        id, app_name, version, message, apk_size, force, date, apk_file_url
     </sql>
     <select id="getLastedApkVersion" resultMap="BaseResultMap">
         select * from apk_update order by date desc limit 1;
